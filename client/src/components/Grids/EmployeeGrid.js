@@ -1,13 +1,15 @@
 import React, { useMemo } from 'react'
 import { AgGridReact } from 'ag-grid-react'
-import "ag-grid-community/styles/ag-grid.css"
-import "ag-grid-community/styles/ag-theme-quartz.css"
+import 'ag-grid-community/styles/ag-grid.css'
+import 'ag-grid-community/styles/ag-theme-quartz.css'
+
+import { formatToWords } from 'components/mixins/dateFormatter'
 
 const EmployeeGrid = () => {
   // заголовки столбцов
   const colDefs = [
     { field: "firstname", headerName: 'Имя', width: '300%' },
-    { field: "lastname", headerName: 'Фамилия', width: '300%' },
+    { field: "lastname", headerName: 'Фамилия', width: '300%'},
     { field: "birthdate", headerName: 'Дата рождения', width: '300%' },
     { field: "gender", headerName: 'Пол', width: '290%' },
   ]
@@ -24,7 +26,13 @@ const EmployeeGrid = () => {
       fetch(process.env.REACT_APP_EMPLOYEES_URL)
         .then(httpResponse => httpResponse.json())
         .then(response => {
-          params.successCallback(response, response.length)
+          const formated = response.map(v => {
+            return {
+              ...v,
+              birthdate: formatToWords(new Date(v.birthdate))
+            }
+          })
+          params.successCallback(formated, formated.length)
         })
         .catch(error => {
           console.error(error)
