@@ -36,6 +36,7 @@ const DepartmentsGrid = () => {
       <AgGridReact
         rowData={rowData} 
         columnDefs={colDefs}
+        popupParent='#departments'
       />
     </div>
   )

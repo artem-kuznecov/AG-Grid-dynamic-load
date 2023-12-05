@@ -84,7 +84,7 @@ function ModalAdd(args) {
                     <br/>
                     <Input 
                         id='about_text'
-                        placeholder='Опишите новый отдел одним параграфом'
+                        placeholder='Опишите сферу деятельности нового отдела'
                         type='textarea'
                         style={{ padding: 10 }}
                     />

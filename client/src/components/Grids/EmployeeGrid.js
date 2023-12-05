@@ -29,7 +29,8 @@ const EmployeeGrid = () => {
           const formated = response.map(v => {
             return {
               ...v,
-              birthdate: formatToWords(new Date(v.birthdate))
+              birthdate: formatToWords(new Date(v.birthdate)),
+              gender: v.gender == 'М' ? 'Мужской' : 'Женский'
             }
           })
           params.successCallback(formated, formated.length)
