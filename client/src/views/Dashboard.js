@@ -1,8 +1,9 @@
 import React from 'react'
-
 import EmployeeGrid from 'components/Grids/EmployeeGrid'
 import DepartmentsGrid from 'components/Grids/DepartmentsGrid'
-import ModalAdd from 'components/Modal'
+import ActionButton from 'components/Modal/modalCard'
+
+import { createRow, updateRow, deleteRow} from '../components/mixins/CRUD'
 
 function Dashboard() {
   return (
@@ -17,9 +18,9 @@ function Dashboard() {
       <section id="departments" style={{ marginBottom: '5rem' }}>
         <h2>Отделения компании (зависимая таблица)</h2>
         <span style={{ display: 'flex', flexDirection: 'row' }}>
-          <ModalAdd title='Создать запись' type='create'/>
-          <ModalAdd title='Изменить запись' type='update'/>
-          <ModalAdd title='Удалить запись' type='delete'/>
+          <ActionButton title='создать запись' type='create' color='primary' action={createRow} />
+          <ActionButton title='изменить запись' type='update' color='warning' action={updateRow} />
+          <ActionButton title='удалить запись' type='delete' color='danger' action={deleteRow} />
         </span>
         <DepartmentsGrid />
       </section>
