@@ -9,7 +9,7 @@ async function getAllDepartments(req, res) {
     // вывод отделов компаниии с указанием фамилии и имени директора отдела
     if (Object.hasOwn(req.query, 'join')) {
         sequelize.query(`
-            SELECT departments.name, departments.foundation_date, departments.about_text, departments.address, employees.firstname, employees.lastname 
+            SELECT departments.name, departments.foundation_date, departments.about_text, departments.address, employees.firstname, employees.lastname
             FROM departments 
             LEFT JOIN employees 
             ON departments.director_id = employees.id;
@@ -103,7 +103,7 @@ async function updateOneDepartment(req, res) {
         })
 
         await sequelize.query(`UPDATE departments SET 
-            name='${req.bodyname || oldData.name}', 
+            name='${req.body.name || oldData.name}', 
             about_text='${req.body.about_text || oldData.about_text}', 
             address='${req.body.address || oldData.address}', 
             director_id='${req.body.director_id || oldData.director_id}' 

@@ -1,15 +1,17 @@
 import React, { useMemo } from 'react'
 import { AgGridReact } from 'ag-grid-react'
-import "ag-grid-community/styles/ag-grid.css"
-import "ag-grid-community/styles/ag-theme-quartz.css"
+import 'ag-grid-community/styles/ag-grid.css'
+import 'ag-grid-community/styles/ag-theme-quartz.css'
+
+import { formatToWords } from 'components/mixins/dateFormatter'
 
 const EmployeeGrid = () => {
   // заголовки столбцов
   const colDefs = [
-    { field: "firstname", headerName: 'Имя' },
-    { field: "lastname", headerName: 'Фамилия' },
-    { field: "birthdate", headerName: 'Дата рождения' },
-    { field: "gender", headerName: 'Пол' },
+    { field: "firstname", headerName: 'Имя', width: '300%' },
+    { field: "lastname", headerName: 'Фамилия', width: '300%'},
+    { field: "birthdate", headerName: 'Дата рождения', width: '300%' },
+    { field: "gender", headerName: 'Пол', width: '290%' },
   ]
 
   // определение возможности сортировки и фильтрации столбцов
@@ -24,7 +26,13 @@ const EmployeeGrid = () => {
       fetch(process.env.REACT_APP_EMPLOYEES_URL)
         .then(httpResponse => httpResponse.json())
         .then(response => {
-          params.successCallback(response, response.length)
+          const formated = response.map(v => {
+            return {
+              ...v,
+              birthdate: formatToWords(new Date(v.birthdate))
+            }
+          })
+          params.successCallback(formated, formated.length)
         })
         .catch(error => {
           console.error(error)
@@ -38,14 +46,14 @@ const EmployeeGrid = () => {
   }
 
   return (
-    <div id='main-table' className="ag-theme-quartz-dark" style={{ height: 500, width: '68%' }}>
+    <div id='main-table' className="ag-theme-quartz" style={{ height: 500, width: '100%' }}>
       <AgGridReact
         columnDefs={colDefs}
         defaultColDef={defaultColDef}
         rowModelType='infinite'
-        paginationPageSize={50}
-        popupParent={document.querySelector('#employees')}
-        cacheBlockSize={50}
+        paginationPageSize={25}
+        popupParent={document.querySelector('#main-table')}
+        cacheBlockSize={25}
         maxConcurrentDatasourceRequests={1}
         onGridReady={onGridReady}
       />
