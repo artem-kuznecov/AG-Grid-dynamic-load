@@ -3,3 +3,12 @@
 
 /client/dev.js
 /server/dev.js
+
+/client/build
+
+/client/coverage
+
+/client/package-lock.json
+/server/package-lock.json
+
+/client/.npmrc

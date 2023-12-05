@@ -1,5 +1,5 @@
-const { Sequelize, DataTypes } = require('sequelize'),
-      sequelize = new Sequelize(process.env.DATABASE)
+const { Sequelize, DataTypes } = require('sequelize')
+const sequelize = new Sequelize(process.env.DATABASE)
 
 const Department = sequelize.define('Department',
     {

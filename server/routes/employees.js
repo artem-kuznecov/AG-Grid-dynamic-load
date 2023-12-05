@@ -1,11 +1,11 @@
-const { Router } = require('express'),
-      router = Router()
-
+const { Router } = require('express')
 const { getAllEmployees, 
         createOneEmployee, 
         updateOneEmployee, 
         deleteOneEmployee, 
         getOneEmployee } = require('../controllers/employees')
+        
+const router = Router()
 
 router.get('/', getAllEmployees)
 router.get('/:id', getOneEmployee)

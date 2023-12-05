@@ -1,30 +1,16 @@
 require('dotenv').config()
 
-const bodyParser = require("body-parser")
+const bodyParser = require('body-parser')
 
 const express = require('express'),
       path = require('path'),
-    //   { Sequelize } = require('sequelize'),
       departmentsRouter = require('./routes/departments.js'),
-      employeesRouter = require('./routes/employees.js'),
-      exphbs = require('express-handlebars') // ! FIXME DELETE
+      employeesRouter = require('./routes/employees.js')
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 8000
 const app = express()
 
-
 app.use(bodyParser.json())
-
-// ~
-const hbs = exphbs.create({
-    extname: 'hbs',
-    defaultLayout: 'main'
-})
-
-app.engine('hbs', hbs.engine)
-app.set('view engine', 'hbs')
-app.set('views', 'views')
-// ~
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))

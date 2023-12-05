@@ -1,0 +1,13 @@
+a {
+    text-decoration: none;
+}
+.main-panel {
+    background-color: whitesmoke
+}
+.main-panel .ag-theme-quartz-dark {
+    --ag-wrapper-border-radius: 18px;
+}
+
+.main-panel .ag-theme-quartz-dark .ag-root-wrapper.ag-ltr.ag-layout-normal {
+    box-shadow: 0 10px 30px rgb(83, 0, 106);
+}
