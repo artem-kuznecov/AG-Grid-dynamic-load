@@ -9,7 +9,7 @@ async function getAllDepartments(req, res) {
     // вывод отделов компаниии с указанием фамилии и имени директора отдела
     if (Object.hasOwn(req.query, 'join')) {
         sequelize.query(`
-            SELECT departments.name, departments.foundation_date, departments.about_text, departments.address, employees.firstname, employees.lastname 
+            SELECT departments.name, departments.foundation_date, departments.about_text, departments.address, employees.firstname, employees.lastname, departments.logo_link 
             FROM departments 
             LEFT JOIN employees 
             ON departments.director_id = employees.id;
