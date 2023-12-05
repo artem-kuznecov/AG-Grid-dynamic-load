@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "serve": "nodemon app",
-    "start": "node app"
+    "start": "node app",
+    "start:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"
   },
   "keywords": [],
   "author": "",
