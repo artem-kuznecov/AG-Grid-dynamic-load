@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-quartz.css'
@@ -30,7 +30,7 @@ const EmployeeGrid = () => {
             return {
               ...v,
               birthdate: formatToWords(new Date(v.birthdate)),
-              gender: v.gender == 'М' ? 'Мужской' : 'Женский'
+              gender: v.gender === 'М' ? 'Мужской' : 'Женский'
             }
           })
           params.successCallback(formated, formated.length)
