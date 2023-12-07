@@ -1,6 +1,6 @@
 -- Создание базы данных
 
-CREATE DATABASE company WITH OWNER admin;
+CREATE DATABASE company WITH OWNER postgres;
 
 -- Создание таблиц
 

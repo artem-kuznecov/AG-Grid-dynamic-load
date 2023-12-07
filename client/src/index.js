@@ -17,4 +17,4 @@ root.render(
       <Route path='/' element={<Navigate to='/admin/dashboard' replace />} />
     </Routes>
   </BrowserRouter>
-)
+) 

@@ -27,6 +27,7 @@ const DepartmentsGrid = () => {
           foundation_date: formatToWords(new Date(v.foundation_date))
         }
       })
+      .cat
       setRowData(formated)
     })
   }, [])
