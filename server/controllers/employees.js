@@ -141,4 +141,4 @@ async function deleteOneEmployee(req, res) {
     }
 }
 
-module.exports = { getAllEmployees, getOneEmployee, createOneEmployee, updateOneEmployee, deleteOneEmployee, getAllEmployeesShort }
+module.exports = { getAllEmployees, getOneEmployee, createOneEmployee, updateOneEmployee, deleteOneEmployee }
