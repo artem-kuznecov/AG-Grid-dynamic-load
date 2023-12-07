@@ -8,7 +8,6 @@ import { createRow, updateRow, deleteRow} from '../components/mixins/CRUD'
 function Dashboard() {
   return (
     <div className="content" style={{ backgroundColor: 'transparent' }}>
-      {/* <div className='test skeleton'></div> */}
       <section id="employees" style={{ marginBottom: '5rem' }}>
         <h2>Сотрудники (главная таблица)</h2>
         <EmployeeGrid/>
