@@ -1,30 +1,55 @@
--- Создание базы данных
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
 
-CREATE DATABASE newone WITH OWNER admin;
+SET default_tablespace = '';
 
--- Создание таблиц
+SET default_table_access_method = heap;
 
-CREATE TABLE employees (
-    id integer NOT NULL PRIMARY KEY,
-    firstname CHARACTER VARYING(30) NOT NULL,
-    lastname CHARACTER VARYING(30) NOT NULL,
-    birthdate DATE NOT NULL,
-    gender CHARACTER VARYING(1)
+
+
+CREATE TABLE public.departments (
+    id integer NOT NULL,
+    name character varying(30) NOT NULL,
+    foundation_date date NOT NULL,
+    about_text character varying(100),
+    address character varying(100),
+    director_id integer
 );
 
-CREATE TABLE departments (
-    id integer NOT NULL PRIMARY KEY,
-    name CHARACTER VARYING(30) NOT NULL,
-    foundation_date DATE NOT NULL,
-    about_text CHARACTER VARYING(100),
-    address CHARACTER VARYING(100),
-    director_id INTEGER,
-	CONSTRAINT fk_director FOREIGN KEY (director_id) REFERENCES employees(id) ON UPDATE CASCADE ON DELETE SET DEFAULT
+
+ALTER TABLE public.departments OWNER TO postgres;
+
+
+
+CREATE TABLE public.employees (
+    id integer NOT NULL,
+    firstname character varying(30) NOT NULL,
+    lastname character varying(30) NOT NULL,
+    birthdate date NOT NULL,
+    gender character varying(1)
 );
 
--- Наполнение таблиц начальными данными
 
--- Таблица employees
+ALTER TABLE public.employees OWNER TO postgres;
+
+
+
+INSERT INTO public.departments (id, name, foundation_date, about_text, address, director_id) VALUES (1, 'Перекресток', '2009-03-13', 'Продуктовый ритейл, алкоголь', 'г. Москва, ул. Средняя Калитниковская, д. 28 стр. 4', 90);
+INSERT INTO public.departments (id, name, foundation_date, about_text, address, director_id) VALUES (2, 'Карусель', '2013-10-27', 'Алкоголь, продуктовый ритейл', 'г. Москва, ул. Академика Королева, д. 19, помещ. 5045', 3);
+INSERT INTO public.departments (id, name, foundation_date, about_text, address, director_id) VALUES (3, 'Чижик', '2007-11-25', 'Продуктовый ритейл', 'г. Москва, ул. Ладожская, д. 10', 74);
+INSERT INTO public.departments (id, name, foundation_date, about_text, address, director_id) VALUES (4, 'Пятерочка', '2000-01-07', 'Доставка продуктов, продуктовый ритейл, алкоголь ', 'г.Санкт-Петербург, Невский пр-кт, 90/92', 63);
+INSERT INTO public.departments (id, name, foundation_date, about_text, address, director_id) VALUES (6, 'Много лосося', '2013-12-16', 'Доставка еды', 'г. Москва, муниципальный округ Нижегородский вн.тер.г., ул. Средняя Калитниковская, д. 28, стр. 4', 4);
+INSERT INTO public.departments (id, name, foundation_date, about_text, address, director_id) VALUES (5, 'Перекресток Express', '2007-12-13', 'Продуктовый ритейл, доставка продуктов', 'г. Москва, пл. Спартаковская, д. 14 стр. 3 ком. 10', 69);
+
+
 
 INSERT INTO public.employees (id, firstname, lastname, birthdate, gender) VALUES (1, 'Александрова', 'Алиса', '1996-03-28', 'Ж');
 INSERT INTO public.employees (id, firstname, lastname, birthdate, gender) VALUES (2, 'Андреев', 'Егор', '1975-06-23', 'М');
@@ -127,11 +152,17 @@ INSERT INTO public.employees (id, firstname, lastname, birthdate, gender) VALUES
 INSERT INTO public.employees (id, firstname, lastname, birthdate, gender) VALUES (99, 'Щербаков', 'Антон', '1983-07-25', 'М');
 INSERT INTO public.employees (id, firstname, lastname, birthdate, gender) VALUES (100, 'Яковлева', 'Екатерина', '1998-01-26', 'Ж');
 
--- Таблица departments
 
-INSERT INTO public.departments (id, name, foundation_date, about_text, address, director_id) VALUES (1, 'Перекресток', '2009-03-13', 'Продуктовый ритейл, алкоголь', 'г. Москва, ул. Средняя Калитниковская, д. 28 стр. 4', 90);
-INSERT INTO public.departments (id, name, foundation_date, about_text, address, director_id) VALUES (2, 'Карусель', '2013-10-27', 'Алкоголь, продуктовый ритейл', 'г. Москва, ул. Академика Королева, д. 19, помещ. 5045', 3);
-INSERT INTO public.departments (id, name, foundation_date, about_text, address, director_id) VALUES (3, 'Чижик', '2007-11-25', 'Продуктовый ритейл', 'г. Москва, ул. Ладожская, д. 10', 74);
-INSERT INTO public.departments (id, name, foundation_date, about_text, address, director_id) VALUES (4, 'Пятерочка', '2000-01-07', 'Доставка продуктов, продуктовый ритейл, алкоголь ', 'г.Санкт-Петербург, Невский пр-кт, 90/92', 63);
-INSERT INTO public.departments (id, name, foundation_date, about_text, address, director_id) VALUES (6, 'Много лосося', '2013-12-16', 'Доставка еды', 'г. Москва, муниципальный округ Нижегородский вн.тер.г., ул. Средняя Калитниковская, д. 28, стр. 4', 4);
-INSERT INTO public.departments (id, name, foundation_date, about_text, address, director_id) VALUES (5, 'Перекресток Express', '2007-12-13', 'Продуктовый ритейл, доставка продуктов', 'г. Москва, пл. Спартаковская, д. 14 стр. 3 ком. 10', 69);
+
+ALTER TABLE ONLY public.departments
+    ADD CONSTRAINT departments_pkey PRIMARY KEY (id);
+
+
+
+ALTER TABLE ONLY public.employees
+    ADD CONSTRAINT employees_pkey PRIMARY KEY (id);
+
+
+
+ALTER TABLE ONLY public.departments
+    ADD CONSTRAINT fk_director FOREIGN KEY (director_id) REFERENCES public.employees(id) ON UPDATE CASCADE ON DELETE SET DEFAULT;

@@ -13,7 +13,7 @@ async function getAllDepartments(req, res) {
             FROM departments 
             LEFT JOIN employees 
             ON departments.director_id = employees.id;
-        `)
+        `, { logging: false })
         .then(response => {
             return res.status(200).send(response[0])
         })
@@ -25,15 +25,19 @@ async function getAllDepartments(req, res) {
         sequelize.query(`SELECT id, name FROM departments` , {type: QueryTypes.SELECT})
         .then(response => {
             return res.status(200).send(response)
-        })
+        }, { logging: false })
         .catch(e => sqlErrorHandler(e, res))
         return
     }
 
     try {
-        Department.findAll({
-            attributes: ['id', 'name', 'foundation_date', 'about_text', 'address', 'director_id']
-        }).then(response => {
+        Department.findAll(
+            {
+                attributes: ['id', 'name', 'foundation_date', 'about_text', 'address', 'director_id'],
+                logging: false
+            }
+        )
+        .then(response => {
             return res.status(200).send(response)
         })
     } catch (e) {
@@ -49,12 +53,15 @@ async function getOneDepartment(req, res) {
     }
 
     try {
-        Department.findOne({
-            attributes: ['id', 'name', 'foundation_date', 'about_text', 'address', 'director_id'],
-            where: {
-                id: req.params.id
+        Department.findOne(
+            {
+                attributes: ['id', 'name', 'foundation_date', 'about_text', 'address', 'director_id'],
+                where: {
+                    id: req.params.id
+                },
+                logging: false
             }
-        }).then(response => {
+        ).then(response => {
             return res.status(200).send(response)
         })
     } catch (e) {
@@ -66,7 +73,7 @@ async function getOneDepartment(req, res) {
 async function createOneDepartment(req, res) {
     let newId // идентификатор новой записи (формируется путем прибавления единицы к максимальному из существующих)
     try {
-        newId = await sequelize.query('SELECT * FROM departments ORDER BY id DESC LIMIT 1;')
+        newId = await sequelize.query('SELECT * FROM departments ORDER BY id DESC LIMIT 1;', { logging: false })
         newId = newId[0][0].id + 1
 
         Department.create(
@@ -81,7 +88,8 @@ async function createOneDepartment(req, res) {
             {
                 fields: ['id', 'name', 'foundation_date', 'about_text', 'address', 'director_id'],
                 returning: ['id'],
-                isNewRecord: true
+                isNewRecord: true,
+                logging: false
             }
         ).then(() => {
             return res.status(201).send({success: true, id: newId}) // в поле id возвращается идентификатор созданной записи
@@ -98,17 +106,21 @@ async function updateOneDepartment(req, res) {
 
     try {
         let oldData // сохранение старых данных записи с полученным идентификатором
-        await sequelize.query(`SELECT * FROM departments WHERE id = '${req.params.id}';`).then(response => {
+        await sequelize.query(`SELECT * FROM departments WHERE id = '${req.params.id}';`, { logging: false })
+        .then(response => {
             if (response[0][0]) oldData = response[0][0]
         })
 
-        await sequelize.query(`UPDATE departments SET 
-            name='${req.body.name || oldData.name}', 
-            about_text='${req.body.about_text || oldData.about_text}', 
-            address='${req.body.address || oldData.address}', 
-            director_id='${req.body.director_id || oldData.director_id}' 
-            WHERE id = '${req.params.id}';
-        `).then(() => {
+        await sequelize.query(
+            `
+                UPDATE departments SET 
+                name='${req.body.name || oldData.name}', 
+                about_text='${req.body.about_text || oldData.about_text}', 
+                address='${req.body.address || oldData.address}', 
+                director_id='${req.body.director_id || oldData.director_id}' 
+                WHERE id = '${req.params.id}';
+            `, { logging: false }
+        ).then(() => {
             return res.status(200).send({success: true, updated: req.params.id})  // в поле id возвращается идентификатор измененной записи
         })
     } catch (e) {
@@ -121,12 +133,16 @@ async function deleteOneDepartment(req, res) {
     if (!Number(req.params.id)) 
         return res.status(400).send({error: 'Проверьте правильность введенных данных'})
     try {
-        Department.destroy({
-            where: {
-                id: req.params.id
+        Department.destroy(
+            {
+                where: {
+                    id: req.params.id
+                },
+                logging: false
             }
-        }).then(response => {
-            if (response == 1) res.status(200).send({success: true})
+        ).then(response => {
+            if (response == 1)
+                res.status(200).send({success: true})
             else return res.status(404).send({error: 'Запись с таким идентификатором не найдена'})
         })
     } catch (e) {
