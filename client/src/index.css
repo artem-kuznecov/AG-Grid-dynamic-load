@@ -10,5 +10,25 @@ a {
 
 .main-panel .ag-theme-quartz-dark .ag-root-wrapper.ag-ltr.ag-layout-normal,
 .main-panel .ag-theme-quartz .ag-root-wrapper.ag-ltr.ag-layout-normal {
-    box-shadow: 0 10px 30px rgb(83, 0, 106);
+    box-shadow: 0px 0px 30px 12px rgb(100, 5, 90);
+}
+
+.test {
+    width: 200px;
+    height: 200px;
+    background-color: red;
+}
+
+.skeleton {
+    opacity: .6;
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: hsl(200, 20%, 70%);
+    }
+    100% {
+        background-color: hsl(200, 20%, 90%);
+    }
 }

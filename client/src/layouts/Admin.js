@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 
-import DemoNavbar from 'components/Navbars/Navbar.js'
+import Navbar from 'components/Navbars/Navbar.js'
 import Footer from 'components/Footer/Footer.js'
 import Sidebar from 'components/Sidebar/Sidebar.js'
 
@@ -27,7 +27,7 @@ function Dashboard(props) {
         activeColor={activeColor}
       />
       <div className='main-panel' ref={mainPanel}>
-        <DemoNavbar {...props} />
+        <Navbar {...props} />
         <Routes>
           {routes.map((prop, key) => {
             return (

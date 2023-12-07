@@ -6,7 +6,7 @@ var routes = [
   {
     path: '/dashboard',
     name: 'Сводка',
-    icon: 'nc-icon nc-layout-11',
+    icon: 'nc-icon nc-layout-11 skeleton',
     component: <Dashboard />,
     layout: '/admin'
   },
